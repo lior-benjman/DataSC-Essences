@@ -3,6 +3,6 @@ Data Science Essences project- steam store
 For the data collection- we used the command:
 "python steam_scraper.py --apps 730 570 578080 --limit 4000 --outfile reviews.csv"
 in the terminal.
-![alt text](image-1.png)
+![alt text](image-2.png)
 
-and then
+With that we collected the data that we needed (12,000 rows) in csv file "reviews.csv".
