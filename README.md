@@ -16,7 +16,8 @@ The tools that we used were:
 An example of an **anomaly** in our data set:
 "578080,169750537,1720860019,1,2194,0.937738180160522461,2 likes and i'll uninstall this game"
 it's useful_score got 0.937 which is the highest in our data set, and the user did a thumbs up (which mean he liked the game) so you might think it's just a profesional and positive review that got a lot of likes. Meanwhile- it's quite the opposite - the user stated that if he gets more than 1 like he will delete the game- it seems that a lot of users found this funny and therefore he got a lot of likes. It wasn't a "useful" review after all.
-
+![alt text](image.png)
+![alt text](image-1.png)
 🔍"SentenceTransformer" What does this do?
 from sentence_transformers import SentenceTransformer
 model = SentenceTransformer('all-MiniLM-L6-v2')
