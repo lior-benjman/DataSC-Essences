@@ -1,38 +1,123 @@
-# DataSC-Essences
-Data Science Essences project- steam store
-For the data collection- we used the command:
-"python steam_scraper.py --apps 730 570 578080 --limit 4000 --outfile reviews.csv"
-in the terminal.
-![alt text](image-2.png)
+DataSC-Essences — Steam Reviews NLP & Topic Insights
 
-With that we collected the data that we needed (12,000 rows) in csv file "reviews.csv".
+One-stop ML/NLP pipeline that scrapes Steam reviews for top games, embeds text with SentenceTransformers, explores topics (PCA), clusters similar reviews, and explains model behavior with LIME. Built end-to-end in a single notebook for fast iteration and clear storytelling.
 
-The tools that we used were:
+⭐ Project scored highest out of 15 in course cohort.
 
-*requests library – does the actual web-request: “GET this Steam URL, give me the JSON back.”
-*argparse (built-in) – lets us pass flags like --apps 730 instead of hard-coding numbers.
-*csv module (built-in) – writes each review line-by-line into reviews.csv.
+Why this project matters
 
-An example of an **anomaly** in our data set:
-"578080,169750537,1720860019,1,2194,0.937738180160522461,2 likes and i'll uninstall this game"
-it's useful_score got 0.937 which is the highest in our data set, and the user did a thumbs up (which mean he liked the game) so you might think it's just a profesional and positive review that got a lot of likes. Meanwhile- it's quite the opposite - the user stated that if he gets more than 1 like he will delete the game- it seems that a lot of users found this funny and therefore he got a lot of likes. It wasn't a "useful" review after all.
-![alt text](image.png)
-![alt text](image-1.png)
-🔍"SentenceTransformer" What does this do?
-from sentence_transformers import SentenceTransformer
-model = SentenceTransformer('all-MiniLM-L6-v2')
-X = model.encode(df['text'])
-1. Loads a pre-trained language model
-python
-Copy
-Edit
-model = SentenceTransformer('all-MiniLM-L6-v2')
-That’s a tiny but powerful neural network trained by huggingface + Microsoft, designed to turn entire sentences into meaningful numeric vectors.
+Shows data collection → NLP embeddings → dimensionality reduction → clustering → explainability in one place.
 
-Unlike TF-IDF, it understands:
+Uses production-relevant tools (Hugging Face SentenceTransformers, LIME) and a reproducible notebook workflow.
 
-grammar
+Includes a concrete scraper command and a 12k-row dataset example to make the work tangible. 
+GitHub
 
-negation ("not")
+Project Highlights
 
-sarcasm
+Custom web-scraper for Steam reviews with CLI flags and CSV export. 
+GitHub
+
+Sentence embeddings using all-MiniLM-L6-v2 (great speed/quality tradeoff). 
+GitHub
+
+Topic exploration with PCA (see pca_topics_interpretation.csv). 
+GitHub
+
+Explainability via LIME (see lime_review_explanation.html). 
+GitHub
+
+Single-notebook pipeline: steam_full_pipeline.ipynb for EDA → embeddings → clustering/visuals. 
+GitHub
+
+Repo Structure
+DataSC-Essences/
+├─ data/                             # (optional) local data store
+├─ steam_full_pipeline.ipynb         # end-to-end notebook
+├─ pca_topics_interpretation.csv     # PCA topics mapping/output
+├─ lime_review_explanation.html      # LIME local explanations (HTML)
+├─ image.png / image-1.png / ...     # visuals used in README / notebook
+└─ README.md
+
+
+Refs: notebook, LIME HTML, PCA CSV, and images are in the repo root. 
+GitHub
++1
+
+Data Collection (Steam Reviews)
+
+Example scrape command used in this project:
+
+python steam_scraper.py --apps 730 570 578080 --limit 4000 --outfile reviews.csv
+
+
+This produced ~12,000 review rows (three apps × 4k limit) into reviews.csv. 
+GitHub
+
+Tech used in scraper: requests (HTTP), argparse (CLI flags), csv (streaming writes). 
+GitHub
+
+Fun edge-case: a review with extremely high “useful” score was actually sarcastic (“2 likes and I’ll uninstall this game”) — highlights why semantic models beat naive heuristics. 
+GitHub
+
+Methods
+
+Embeddings
+
+Model: sentence-transformers/all-MiniLM-L6-v2
+
+Why: compact, fast, and strong sentence-level semantics for clustering/search. 
+GitHub
+
+Dimensionality Reduction & Topics
+
+PCA for low-dim projections and topic axes; interpretation stored in pca_topics_interpretation.csv. 
+GitHub
+
+Clustering / Exploration
+
+Clustering and neighborhood analysis performed in the notebook (steam_full_pipeline.ipynb). 
+GitHub
+
+Explainability
+
+LIME to explain local predictions / cluster assignments (HTML artifact in repo). 
+GitHub
+
+Quickstart
+1) Environment
+# Python 3.10+
+python -m venv .venv
+source .venv/bin/activate           # Windows: .venv\Scripts\activate
+pip install -U pip wheel
+pip install sentence-transformers scikit-learn pandas numpy matplotlib tqdm lime
+
+2) Get Data
+
+Use your own reviews.csv or scrape with the provided command above (apps: 730, 570, 578080). 
+GitHub
+
+3) Run the Pipeline
+
+Open steam_full_pipeline.ipynb and run all cells to:
+
+Load & clean reviews
+
+Encode text with SentenceTransformers
+
+Reduce dimensionality (PCA) + visualize
+
+Cluster & inspect topics
+
+Generate LIME explanations
+
+Notebook path and artifacts are in the repo root. 
+GitHub
+
+Results (at a glance)
+
+Semantic clusters that group similar reviews beyond keywords.
+
+PCA topic axes to interpret dominant themes (e.g., gameplay, performance, community).
+
+LIME explainers to show which phrases drove a sample prediction/cluster placement.
